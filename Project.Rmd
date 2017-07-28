@@ -1,0 +1,27 @@
+---
+title: "Plotly Exercise"
+author: "Xinzhu Yi"
+date: "7/28/2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Plot of car properties:
+### Miles per Galon (mpg) vs. Weight at different cylinder numbers and different transmission model
+### 7/28/2017
+
+```{r, message=FALSE}
+library(plotly)
+data("mtcars")
+am_ind<-character(length = 32)
+am_ind[mtcars$am==1]="manual"
+am_ind[mtcars$am==0]="automatic"
+mtcars<-cbind(mtcars,am_ind)
+mtcars$am_ind<-as.factor(mtcars$am_ind)
+library(ggplot2)
+g<-ggplot(data = mtcars, aes(x=wt,y=mpg, colour=am_ind))+geom_point()+facet_grid(cyl ~ .)
+(ggp<-ggplotly(g))
+```
